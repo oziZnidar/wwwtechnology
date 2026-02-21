@@ -1,0 +1,80 @@
+A. What type of content did the server return?
+JSON file.
+
+B. Where do you see the resource ID?
+In the Content field ("id": 1).
+
+C. Can you see the HTTP status code?
+In terminal, no. In Visual Studio code, yes, it is number 200.
+
+D. What does 200 mean?
+It means the request is OK (succeeded)
+
+E. What category of status code is it?
+Success category ("2xx")
+
+F. What other codes do you know?
+201 - Created
+202 - Accepted
+400 - Bad Request
+401 - Unauthorized
+403 - Forbidden
+404 - Not found
+500 - Internal Service Error
+
+G. What would happen if Content-Type were text/html instead?
+Client would try to render the response as webpage instead of parsing it as data.
+
+H. Does the content-length match the actual size of the body?
+Yes
+
+I. Why is Connection important in high-traffic systems?
+It allows reusing a single TCP connection for multiple requests to reduce the overhead with the use of Keep-Alive Behaviour.
+
+J. What status code did you receive?
+404 - Not found
+
+K. Is there a response body?
+Yes, an empty JSON object {}
+
+L. How does it differ from the successful case?
+If it is successful, it returns a populated JSON object with resource data, meanwhile the current one returned an error status with an empty body.
+
+M. What status code did the server return?
+201
+
+N. What does it mean?
+Request has resulted in creation of new resource
+
+O. What headers appear in this response?
+date, content-type, content-length, location, access-control-allow-credentials, access-control-expose-headers, cache-control, 
+etag, expires, nel, pragma, report-to, reporting-endpoints, server, vary, via, x-content-type-options, x-powered-by, x-ratelimit-limit, 
+x-ratelimit-remaining, x-ratelimit-reset, cf-cache-status, cf-ray, alt-svc
+
+P. Does this API actually validate the token?
+No, it ignores the header and returns data anyway
+
+Q. What status code would a real secure API return if the token were invalid?
+401 - Unauthorized
+
+R. What is the difference between 401 and 403?
+401 - Unauthorized means the user does not have the token but 403 - Forbidden means that the user has the token but is trying to access something that they do not have permission for
+
+S. When would this be useful?
+When you need to verify metadata.
+
+T. Why might monitoring systems use this approach?
+To perform health checks efficiently. It reduces the network traffic while it still confirms that the endpoint is reachable and returning the status codes it is suppoed to return.
+
+U. Complete the following table:
+Code	Category	          Meaning
+200	  Success	            OK. The action requested by the client was received, understood and accepted.
+201	  Success	            Created. The request worked, so a new resource was created.
+400	  Client Error	      Bad request. Server cannot process the request because of a client error.
+401	  Client Error	      Unauthorized. The client does not have the proper credentials to access the resource.
+403	  Client Error	      Forbidden. Client is not authorized to access the resource, even though the server knows the client’s identity.
+404	  Client Error	      Not found. Server cannot find the resource.
+500	  Server Error	      Internal server error. Server encountered an error and could not complete the request.
+
+V. Why is it bad practice to always return 200, even on errors?
+It breaks the HTTP protocol contract. The client is forced to parse the entire response body just to see if the actually failed. It also means we cannot automate monitoring tools to detect outages and so on.
